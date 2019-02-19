@@ -44,7 +44,6 @@ pipeline {
       }
     }
     // DO NOT uncomment until 06_04 Lab
-    /*
     stage('DT Deploy Event') {
       steps {
         container("curl") {
@@ -61,10 +60,9 @@ pipeline {
         }
       }
     }
-    */
-    
+
     // DO NOT uncomment until 10_01 Lab
-    /* 
+    /*
     stage('Run production ready e2e check in staging') {
       steps {
         echo "Waiting for the service to start..."
@@ -74,14 +72,14 @@ pipeline {
           envId: 'Dynatrace Tenant',
           testCase: 'loadtest',
           tagMatchRules: tagMatchRules
-        ) 
+        )
         {
           container('jmeter') {
             script {
-              def status = executeJMeter ( 
+              def status = executeJMeter (
                 scriptName: "jmeter/front-end_e2e_load.jmx",
                 resultsDir: "e2eCheck_${env.APP_NAME}",
-                serverUrl: "front-end.staging", 
+                serverUrl: "front-end.staging",
                 serverPort: 8080,
                 checkPath: '/health',
                 vuCount: 10,
@@ -99,8 +97,8 @@ pipeline {
         }
 
         perfSigDynatraceReports(
-          envId: 'Dynatrace Tenant', 
-          nonFunctionalFailure: 1, 
+          envId: 'Dynatrace Tenant',
+          nonFunctionalFailure: 1,
           specFile: "monspec/e2e_perfsig.json"
         )
       }
